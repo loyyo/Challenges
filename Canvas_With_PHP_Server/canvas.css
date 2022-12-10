@@ -1,0 +1,233 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.podaj-imie {
+	width: 100vw;
+	border: 1px solid red;
+	font-size: 1.75em;
+	user-select: none;
+	text-align: center;
+	padding-top: 3vh;
+	padding-bottom: 3vh;
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.podaj-imie > * {
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+.podaj-imie-text {
+	align-self: center;
+}
+
+.podaj-imie > button {
+	padding: 0.5rem;
+}
+
+.podaj-imie > input {
+	font-size: 0.75em;
+}
+
+.nowy-obraz {
+	display: none;
+	width: 100vw;
+	border: 1px solid red;
+	cursor: pointer;
+	font-size: 1.75em;
+	user-select: none;
+	text-align: center;
+	padding-top: 3vh;
+	padding-bottom: 3vh;
+}
+
+.obrazy {
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.obraz {
+	width: 20vw;
+	padding-top: 4vh;
+	padding-bottom: 4vh;
+	border: 1px solid red;
+	text-align: center;
+	cursor: pointer;
+	font-size: 1em;
+	user-select: none;
+	overflow-x: auto;
+	font-weight: bold;
+}
+
+.canvas {
+	display: none;
+}
+
+.canvas-body {
+	height: 83.5vh;
+	width: 99vw;
+}
+
+#canvas {
+	border: 2px solid black;
+	height: 100%;
+	width: 100%;
+	margin-left: 0.5vw;
+}
+
+.navbar {
+	height: 15vh;
+	width: 99vw;
+	margin-top: 0.5vh;
+	margin-bottom: 0.5vh;
+	margin-left: 0.5vw;
+	border: 2px solid black;
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.navbar > div {
+	height: 14vh;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	margin-left: 1vw;
+	margin-right: 1vw;
+	column-gap: 0.5rem;
+}
+
+.colors {
+	width: 25vw;
+}
+
+.colors > div {
+	height: 6.25vh;
+	width: 12vw;
+	cursor: pointer;
+	margin-top: 0.5vh;
+	transition: 0.1s;
+}
+
+.colors > div > input {
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+}
+
+.colors div.active-color {
+	border: 1px solid black;
+	transform: scale(1.1);
+}
+
+.colors div:nth-child(1) {
+	background-color: black;
+}
+
+.colors div:nth-child(2) {
+	background-color: red;
+}
+
+.colors div:nth-child(3) {
+	background-color: green;
+}
+
+.colors div:nth-child(4) {
+	background-color: blue;
+}
+
+.size {
+	width: 35vw;
+	justify-content: center;
+}
+
+.size-text {
+	text-align: center;
+	font-size: 2em;
+}
+
+.tools {
+	margin-top: 0.5vh;
+	width: 30vw;
+	justify-content: center;
+}
+
+.tools > div {
+	height: 4vh;
+	width: 50%;
+	padding: 0.3rem;
+	margin: auto;
+	background-color: white;
+	color: black;
+	border: 1px solid black;
+	text-align: center;
+	font-size: 1.25em;
+	cursor: pointer;
+	user-select: none;
+}
+
+.tools > div:hover {
+	background-color: black;
+	color: white;
+	transition: 0.1s;
+}
+
+.tools > div > span {
+	vertical-align: middle;
+}
+
+#clear-canvas {
+	background-color: red !important;
+	color: white !important;
+}
+
+.active-tool {
+	background-color: blue !important;
+	color: white !important;
+	border-color: red !important;
+}
+
+#slider-size {
+	width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+	.tools > div {
+		font-size: 1em;
+	}
+	.size {
+		width: 25vw !important;
+	}
+	.size-text {
+		font-size: 1.25em;
+	}
+	.tools {
+		width: 40vw !important;
+	}
+	.colors {
+		width: 25vw !important;
+	}
+}
+
+@media only screen and (max-width: 401px) {
+	.tools {
+		width: 35vw !important;
+	}
+	.size-text {
+		font-size: 0.95em !important;
+	}
+	.tools > div {
+		font-size: 0.7em !important;
+	}
+}

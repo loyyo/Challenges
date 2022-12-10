@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Kalkulator - Maciej Wiencis</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script
+			type="text/javascript"
+			id="MathJax-script"
+			async
+			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+		></script>
+		<style>
+			body,
+			html {
+				padding: 0px;
+				margin: 0px;
+			}
+
+			body {
+				height: 99vh;
+				width: 99vw;
+				overflow: hidden;
+			}
+
+			.displays div {
+				margin-top: 1vh;
+				margin-left: 1vw;
+				margin-right: 1vw;
+				margin-bottom: 1vh;
+				background-color: rgb(142, 133, 247);
+				width: 99%;
+				height: 12.5vh;
+				font-family: sans-serif;
+				overflow: auto;
+				overflow-wrap: break-word;
+				font-size: 2em;
+			}
+			.displays div:first-child {
+				background-color: rgb(143, 244, 246);
+			}
+
+			#keyboard {
+				margin-top: 1vh;
+				margin-left: 1vw;
+				margin-right: 1vw;
+				margin-bottom: 1vh;
+			}
+
+			table td {
+				border: 2px solid rgb(0, 0, 99);
+				border-radius: 10px;
+				font-family: sans-serif;
+				text-align: center;
+				cursor: pointer;
+			}
+
+			p {
+				margin: 0.5rem;
+			}
+
+			@media (orientation: landscape) {
+				.portrait {
+					display: none;
+				}
+				table td {
+					width: 16.5vw;
+					height: 7.75vh;
+					font-size: 2vw;
+				}
+				.displays div {
+					font-size: 1.5em;
+				}
+				p {
+					margin: 0.25rem;
+				}
+			}
+
+			@media (orientation: portrait) {
+				.landscape {
+					display: none;
+				}
+				table td {
+					width: 20vw;
+					height: 7vh;
+					font-size: 5vw;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<div class="displays">
+				<div id="display_1"></div>
+				<div id="display_2"></div>
+				<div id="display_3"></div>
+			</div>
+			<div id="keyboard">
+				<table>
+					<tr class="portrait">
+						<td onclick="ONP('CC')" colspan="1">CC</td>
+						<td onclick="ONP('FRAC')" colspan="2">FRAC</td>
+						<td onclick="ONP('P+Q')" colspan="2">P+Q</td>
+					</tr>
+					<tr class="portrait">
+						<td onclick="ONP('C')" colspan="1">C</td>
+						<td onclick="ONP('GCD')" colspan="2">GCD</td>
+						<td onclick="ONP('SWAP')" colspan="2">SWAP</td>
+					</tr>
+					<tr>
+						<td onclick="ONP('7')" colspan="1">7</td>
+						<td onclick="ONP('8')" colspan="1">8</td>
+						<td onclick="ONP('9')" colspan="1">9</td>
+						<td onclick="ONP('+')" colspan="1">+</td>
+						<td onclick="ONP('-')" colspan="1">-</td>
+						<td onclick="ONP('GCD')" class="landscape" colspan="1">GCD</td>
+						<td onclick="ONP('SWAP')" class="landscape" colspan="1">SWAP</td>
+					</tr>
+					<tr>
+						<td onclick="ONP('4')" colspan="1">4</td>
+						<td onclick="ONP('5')" colspan="1">5</td>
+						<td onclick="ONP('6')" colspan="1">6</td>
+						<td onclick="ONP('*')" colspan="1">*</td>
+						<td onclick="ONP('/')" colspan="1">/</td>
+						<td onclick="ONP('FRAC')" class="landscape" colspan="1">FRAC</td>
+						<td onclick="ONP('P+Q')" class="landscape" colspan="1">P+Q</td>
+					</tr>
+					<tr>
+						<td onclick="ONP('1')" colspan="1">1</td>
+						<td onclick="ONP('2')" colspan="1">2</td>
+						<td onclick="ONP('3')" colspan="1">3</td>
+						<td onclick="ONP('%')" colspan="1">%</td>
+						<td onclick="ONP('^')" colspan="1">^</td>
+						<td onclick="ONP('CC')" class="landscape" colspan="1">CC</td>
+						<td onclick="ONP('C')" class="landscape" colspan="1">C</td>
+					</tr>
+					<tr>
+						<td onclick="ONP('0')" class="portrait" colspan="1">0</td>
+						<td onclick="ONP('0')" class="landscape" colspan="3">0</td>
+						<td onclick="ONP('ENTER')" class="portrait" colspan="4">ENTER</td>
+						<td onclick="ONP('ENTER')" class="landscape" colspan="6">ENTER</td>
+					</tr>
+				</table>
+				<script>
+					let state = '';
+					let stack = [];
+					let trueState = '';
+					let operating = false;
+					let reset = false;
+
+					const resetF = () => {
+						operating = false;
+						reset = true;
+					};
+
+					const gcd = (a, b) => {
+						if (!b) {
+							return a;
+						}
+						return gcd(b, a % b);
+					};
+
+					const calculateFactors = (n) => {
+						const factors = [];
+						let divisor = 2;
+						while (n >= 2) {
+							if (n % divisor == 0) {
+								factors.push(divisor);
+								n = n / divisor;
+							} else {
+								divisor++;
+							}
+						}
+						return factors;
+					};
+
+					const operators = {
+						'+': (num1, num2) => num2 + num1,
+						'*': (num1, num2) => num2 * num1,
+						'-': (num1, num2) => num2 - num1,
+						'/': (num1, num2) => (num1 != 0 ? Math.trunc(num2 / num1) : 'Dzielenie przez 0'),
+						'%': (num1, num2) => (num1 != 0 ? num2 % num1 : 'Dzielenie przez 0'),
+						'^': (num1, num2) => Math.pow(num2, num1),
+						GCD: (num1, num2) => (num1 != 0 ? gcd(num1, num2 % num1) : 'gcd(0,0) nie istnieje'),
+					};
+
+					function ONP(x) {
+						state = state.toString();
+						if (state.includes('=')) state = trueState;
+						if (
+							state == 'Dzielenie przez 0' ||
+							state == 'Za duża liczba' ||
+							state == 'Liczba ujemna' ||
+							state == 'działa na parzystych > 4' ||
+							state == 'gcd(0,0) nie istnieje'
+						)
+							state = '';
+						if (operators[x]) {
+							if (stack.length > 0 && state != '') {
+								let num1 = parseInt(state);
+								let num2 = parseInt(stack.shift());
+								let result = operators[x](num1, num2);
+								state =
+									result == 'Dzielenie przez 0'
+										? result
+										: result == 'gcd(0,0) nie istnieje'
+										? result
+										: isNaN(result)
+										? state
+										: result.toString().includes('e+')
+										? 'Za duża liczba'
+										: !isFinite(result)
+										? 'Za duża liczba'
+										: result < 0
+										? 'Liczba ujemna'
+										: result;
+								operating = true;
+								reset = false;
+							}
+						} else if (x == 'ENTER') {
+							resetF();
+							if (state != '') {
+								stack.unshift(state);
+							}
+						} else if (x == 'CC') {
+							resetF();
+							stack.length = 0;
+							state = '';
+						} else if (x == 'C') {
+							resetF();
+							state = '';
+						} else if (x == 'P+Q') {
+							if (isNaN(parseInt(state)));
+							else if (parseInt(state) < 5 || parseInt(state) % 2 == 1)
+								state = 'działa na parzystych > 4';
+							else {
+								operating = true;
+								reset = false;
+								let factors = calculateFactors(parseInt(state));
+								trueState = state;
+								state =
+									'\\(' +
+									state +
+									' = ' +
+									factors[0].toString() +
+									' + ' +
+									(parseInt(state) - factors[0]).toString() +
+									'\\)';
+							}
+						} else if (x == 'FRAC') {
+							if (typeof parseInt(state) == 'number' && parseInt(state) > 1) {
+								operating = true;
+								reset = false;
+								let factors = calculateFactors(parseInt(state));
+								let factorsString = '';
+								let checked = [];
+								for (const e of factors) {
+									if (!checked.includes(e)) {
+										checked.push(e);
+										let howMany = factors.filter((v) => v === e).length;
+										factorsString += e + (howMany == 1 ? '' : '^' + howMany) + ' \\cdot ';
+									}
+								}
+								trueState = state;
+								state = '\\(' + state + ' = ' + factorsString.slice(0, -7) + '\\)';
+							}
+						} else if (x == 'SWAP') {
+							resetF();
+							if (state != '' && stack.length > 0) [state, stack[0]] = [stack[0], state];
+						} else {
+							if (operating) {
+								stack.unshift(state);
+								state = x;
+								operating = false;
+							} else if (reset) {
+								state = x;
+								reset = false;
+							} else if (state == '0') {
+								state = x;
+							} else {
+								state += x;
+							}
+						}
+						UpdateUI();
+					}
+
+					function UpdateUI() {
+						if (stack.length > 0) {
+							document.getElementById('display_2').innerHTML = '<p>' + stack[0] + '</p>';
+						} else {
+							document.getElementById('display_2').innerHTML = '<p></p>';
+						}
+						if (stack.length > 1) {
+							document.getElementById('display_3').innerHTML = '<p>' + stack[1] + '</p>';
+						} else {
+							document.getElementById('display_3').innerHTML = '<p></p>';
+						}
+						MathJax.typesetPromise()
+							.then(() => {
+								document.getElementById('display_1').innerHTML = '<p>' + state + '</p>';
+								MathJax.typesetPromise();
+							})
+							.catch((err) => console.log(err.message));
+					}
+				</script>
+			</div>
+		</main>
+	</body>
+</html>

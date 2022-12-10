@@ -1,0 +1,176 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	background-color: rgb(47, 47, 164);
+}
+
+#app {
+	background-image: linear-gradient(120deg, rgb(10, 182, 153), rgb(99, 156, 62));
+	width: 96vw;
+	height: 97vh;
+	border-radius: 1%;
+	margin-left: 2vw;
+	margin-top: 1.5vh;
+	box-shadow: 0 0 0.1rem 0.1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.app-name {
+	font-size: 4vh;
+	margin-top: 1.5vh;
+	font-weight: bold;
+	text-shadow: -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255),
+		1px -1px 0 rgb(255, 255, 255), -1px -1px 0 rgb(255, 255, 255);
+}
+
+.search {
+	height: 6.5vh;
+	margin-top: 0.5vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.search input,
+.search button {
+	background-color: white;
+	padding: 1vh 1vw;
+	font-size: 3vh;
+	height: 100%;
+}
+
+.search input,
+button {
+	outline: none;
+	border: 0.15rem solid black;
+}
+
+.search button {
+	border-left: none;
+	cursor: pointer;
+	padding-left: 2.5vw;
+	padding-right: 2.5vw;
+}
+
+.category {
+	display: flex;
+	flex-direction: row;
+	margin-top: 1vh;
+}
+
+.category button {
+	background-color: white;
+	padding: 1.5vh 6.5vw 1.5vh;
+	font-size: 2.5vh;
+	border: 0.15rem solid black;
+	margin: 0 1vw;
+	cursor: pointer;
+}
+
+.todo-container {
+	display: flex;
+	width: 82.5vw;
+	height: 72.5vh;
+	margin-top: 1vh;
+}
+
+.todo-list,
+.done-list {
+	width: 100%;
+	list-style: none;
+	overflow-y: auto;
+}
+
+.todo-item {
+	margin: 1vh 0 1vh 1vw;
+	background: white;
+	color: black;
+	display: flex;
+	align-items: center;
+	font-size: 2vh;
+	padding: 0 0 0 1vw;
+	border: 0.15rem solid black;
+}
+
+.todo-item li {
+	flex: 1;
+	overflow-x: auto;
+}
+
+.todo-item button {
+	background-color: white;
+	padding: 1vh 1vw;
+	font-size: 2vh;
+	cursor: pointer;
+	border: none;
+	border-left: 0.15rem solid black;
+}
+
+.done-button {
+	border-right: none;
+}
+
+button:active {
+	background-color: rgb(47, 47, 164);
+	color: white;
+}
+
+em {
+	pointer-events: none !important;
+}
+
+.suggestions {
+	position: absolute;
+	overflow-y: auto;
+}
+
+.suggestions > ul {
+	list-style: none;
+	max-height: 80vh;
+	background-color: white !important;
+}
+
+.suggestions > ul > li {
+	background-color: white;
+	color: black;
+	font-size: 2vh;
+	padding: 0.75vh 0 0.75vh 1.25vw;
+	border: 1px solid lightgray;
+	border-top: none;
+	cursor: pointer;
+}
+
+.suggestions > ul > li:hover,
+.suggestions > ul > li:active {
+	background-color: rgb(47, 47, 164);
+	color: white;
+	border: none;
+}
+
+@media only screen and (max-width: 768px) {
+	.search {
+		height: 5vh;
+	}
+	.search input,
+	.search button {
+		font-size: 2.25vh;
+	}
+	.category button {
+		font-size: 1.75vh;
+	}
+	.app-name {
+		font-size: 3.25vh;
+	}
+	.todo-list,
+	.done-list {
+		height: 75vh;
+	}
+}

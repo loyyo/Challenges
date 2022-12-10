@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title></title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="canvas.css" />
+	</head>
+
+	<div class="strona-glowna-serwera">
+		<div class="test"></div>
+		<div class="podaj-imie">
+			<div class="podaj-imie-text">PODAJ IMIE:</div>
+			<input id="name" type="text">
+			<button id="name-button">OK</button>
+		</div>
+		<div class="nowy-obraz">
+			<div>NOWY OBRAZ</div>
+		</div>
+		<div class="obrazy">
+		</div>
+	</div>
+
+	<div class="canvas">
+		<div class="navbar">
+			<div class="colors">
+        		<div class="color active-color">
+         			<input type="color" id="color-picker">
+        		</div>
+				<div class="color"></div>
+				<div class="color"></div>
+				<div class="color"></div>
+			</div>
+			<div class="size">
+        		<div class="size-text">Grubość:</div>
+				<input type="range" min="1" max="30" value="5" id="slider-size"></input>
+			</div>
+			<div class="tools">
+				<div id="brush" class="active-tool tool">
+          			<span>Brush</span>
+       			</div>
+        		<div id="line" class="tool">
+          			<span>Line</span>
+        		</div>
+        <div id="eraser" class="tool">
+          <span>Eraser</span>
+        </div>
+        <div id="circle" class="tool">
+          <span>Circle</span>
+        </div>
+		<div id="rectangle" class="tool">
+          <span>Rectangle</span>
+        </div>
+		<div id="clear-canvas">
+			<span class="clear-button">Clear</span>
+		</div>
+			</div>
+		</div>
+		<div class="canvas-body">
+			<canvas id="canvas"> </canvas>
+		</div>
+	</div>
+	<script src="canvas.js"></script>
+</html>

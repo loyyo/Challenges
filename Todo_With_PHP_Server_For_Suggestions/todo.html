@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title></title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="todo.css" />
+	</head>
+	<body>
+		<div id="app">
+			<div class="app-name">TODO List App</div>
+			<form class="search-bar">
+				<div class="search">
+					<input class="search-input" type="text" />
+					<button class="search-button" type="submit">
+						<em class="todo-button-plus">+</em>
+					</button>
+				</div>
+				<div class="suggestions">
+					<ul class="suggestions-list"></ul>
+				</div>
+			</form>
+			<div class="category">
+				<button class="category-todo">TODO</button>
+				<button class="category-done">DONE</button>
+			</div>
+			<div class="todo-container">
+				<ul class="todo-list"></ul>
+				<ul class="done-list"></ul>
+			</div>
+		</div>
+		<script src="todo.js" async defer></script>
+	</body>
+</html>
